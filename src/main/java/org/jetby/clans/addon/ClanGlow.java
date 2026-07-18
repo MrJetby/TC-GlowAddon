@@ -46,7 +46,7 @@ public class ClanGlow extends JavaAddon {
         PacketEvents.getAPI().getEventManager()
                 .registerListener(glow = new Glow(this), PacketListenerPriority.LOW);
 
-        storage = new GlowStorage(getDataFolder(), getLogger());
+        storage = new GlowStorage(getLogger());
         storage.load();
 
         getServiceManager().getGuiFactory().register("choose", ChooseGui::new);
@@ -64,7 +64,7 @@ public class ClanGlow extends JavaAddon {
     }
 
     private void disableGlowForAll() {
-        for (Clan clan : getServiceManager().getClanManager().getClanList().values()) {
+        for (Clan clan : getServiceManager().getClanManager().getClanList(Integer.MAX_VALUE)) {
             for (Member member : clan.getMembersWithLeader()) {
                 Player player = Bukkit.getPlayer(member.getUuid());
                 if (player != null) {
